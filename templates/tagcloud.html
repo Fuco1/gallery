@@ -1,0 +1,7 @@
+<div class="tagcloud">
+    Tags:
+    <?php foreach($tags as $tag): ?>
+    <a href="index.php?m=s&q=<?=urlencode($tag['title']);?>">
+        <span style="<?=$tag['style'];?>"><?=$tag['title'];?></span></a>
+    <?php endforeach; ?>
+</div>

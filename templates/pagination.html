@@ -1,0 +1,17 @@
+<div style="text-align:center; margin: 15px 0px 15px 0px;">
+    <a href="<?=($qstr)?
+       ('index.php?m=s&q='.$qstr.'&s=0'):
+       ('index.php?s=0');?>">First</a>
+
+    <a href="<?=($qstr)?
+       ('index.php?m=s&q='.$qstr.'&s='.(($page>1)?(($page-2)*PAGE_LIMIT):0)):
+       ('index.php?s='.(($page>1)?(($page-2)*PAGE_LIMIT):0));?>">Prev</a>
+
+    <a href="<?=($qstr)?
+       ('index.php?m=s&q='.$qstr.'&s='.(($page<$page_total)?($page*PAGE_LIMIT):(($page_total-1)*PAGE_LIMIT))):
+       ('index.php?s='.(($page<$page_total)?($page*PAGE_LIMIT):(($page_total-1)*PAGE_LIMIT)));?>">Next</a>
+
+    <a href="<?=($qstr)?
+       ('index.php?m=s&q='.$qstr.'&s='.(($page_total-1)*PAGE_LIMIT)):
+       ('index.php?s='.(($page_total-1)*PAGE_LIMIT));?>">Last</a>
+</div>

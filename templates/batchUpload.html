@@ -1,0 +1,41 @@
+<form action="index.php?m=a" method="post">
+    <table>
+        <?php foreach($dirs as $dir_): ?>
+        <tr><td colspan="2"><a href="?m=b&d=<?=urlencode($dir_);?>"><?=$dir_;?></a></td></tr>
+        <?php endforeach; ?>
+        <tr><th>Img</th><th>Title & Tags</th></tr>
+        <?php foreach($images as $img): ?>
+        <tr>
+            <td>
+                <?='Name: '.$img['name'];?><br>
+                <a href="<?=$img['path'];?>"><img style="width:auto; height:200" src="<?=$img['path'];?>" /></a>
+            </td>
+            <td>
+                <div>
+                    Title: <input type="text" name="<?='title_'.$img['name'];?>" size="120" />
+                </div>
+                <div>
+                    Tags: <input type="text" name="<?='tag_'.$img['name'];?>" size="120" />
+                </div>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+        <tr>
+            <td colspan="2">
+                Save to: <input type="text" name="save_directory" size="120">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                Copy this tags to all images: <input type="text" name="common_tags" size="120">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="hidden" name="dir" value="<?=$dir;?>" />
+                <input type="hidden" name="a" value="batch" />
+                <input type="submit" name="submit_batch">
+            </td>
+        </tr>
+    </table>
+</form>

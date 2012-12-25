@@ -1,0 +1,35 @@
+<div id="uploadform">
+    <form enctype="multipart/form-data" action="index.php?m=a" method="post">
+        <table>
+            <tr><td colspan="2">Use reasonable tags to describe the image you're uploading. Try to submit at least two for each image,
+                    preferably related to the content. Tags are case-insensitive.
+                </td></tr>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="title" size="50" /></td>
+            </tr>
+            <tr>
+                <td>Tags (space separated)</td>
+                <td><input type="text" name="tags" size="50" /></td>
+            </tr>
+            <tr>
+                <td>Dir (without tailing / - server side)<br>
+                Please, check similar pictures and try to place yours in the same directory.</td>
+                <td><input type="text" name="dir" size="50" /></td>
+            </tr>
+            <tr>
+                <td>File</td>
+                <td><input type="file" name="uploadedfile" /></td>
+            </tr>
+            <tr>
+                <td>Submit</td>
+                <td>
+                    <input type="hidden" name="a" value="uploadnewfile" />
+                    <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+                    <input type="submit" name="submit_mode" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <a href="?m=b">Batch upload</a>
+</div>

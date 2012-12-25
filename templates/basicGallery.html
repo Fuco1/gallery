@@ -1,0 +1,16 @@
+Page <?=$page;?> from <?=$page_total;?>
+<div id="galleryview">
+    <?=$pagination;?>
+
+    <?php foreach($images as $img): ?>
+    <a href="<?='index.php?m=details&id='.$img->getImage_id().($qstr ? ('&q='.$qstr.'&s='.($page-1)) : '');?>">
+
+        <img style="height:160px;" src="<?=GALLERY_ROOT.$img->getPath().'thumbmed/'.$img->getFilename();?>"
+             alt="<?=$img->getAuthor_id();?>"
+             title="<?=$img->getTitle() .' - ' .date('d. M Y H:i',$img->getDate());?>">
+
+    </a>
+    <?php endforeach; ?>
+
+    <?=$pagination;?>
+</div>
