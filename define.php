@@ -18,7 +18,7 @@ define("SESSIONS_TABLE", 'SESSIONS');
 
 define("CACHE_TIMEOUT", 1);
 
-define("PAGE_LIMIT", 1);
+define("PAGE_LIMIT", 30);
 define("TAG_CLOUD_LIMIT", 50);
 
 define('PHPBB_DATABASE', 'forum1');

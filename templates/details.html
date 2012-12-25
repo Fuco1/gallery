@@ -1,185 +1,187 @@
 <script type="text/javascript">
-<!--
-	var imageStyle = '';
+    <!--
+  var imageStyle = '';
 
   function init() {
-		var show_info = getCookie('show_info');
-		if (show_info) {
-      document.getElementById('info').style.display = 'block';
-      document.getElementById('ih_info').innerHTML = 'Hide info';
-		}
-		else {
-			document.getElementById('info').style.display = 'none';
-      document.getElementById('ih_info').innerHTML = 'Show info';
-	  }
+      var show_info = getCookie('show_info');
+      if (show_info) {
+          document.getElementById('info').style.display = 'block';
+          document.getElementById('ih_info').innerHTML = 'Hide info';
+      }
+      else {
+          document.getElementById('info').style.display = 'none';
+          document.getElementById('ih_info').innerHTML = 'Show info';
+      }
 
-		var scale_to_viewport = getCookie('scale_to_viewport');
-		setImageStyle(scale_to_viewport);
-		if(scale_to_viewport) {
-      document.getElementById('ih_scale').innerHTML = 'Viewport mode';
-    }
-    else {
-			document.getElementById('ih_scale').innerHTML = 'Fullsize mode';
-		}
+      var scale_to_viewport = getCookie('scale_to_viewport');
+      setImageStyle(scale_to_viewport);
+      if(scale_to_viewport) {
+          document.getElementById('ih_scale').innerHTML = 'Viewport mode';
+      }
+      else {
+          document.getElementById('ih_scale').innerHTML = 'Fullsize mode';
+      }
   }
 
-	function setImageStyle(viewport) {
-		var img = document.getElementById('img');
-		var w = img.width;
-		var h = img.height;
+  function setImageStyle(viewport) {
+      var img = document.getElementById('img');
+      var w = img.width;
+      var h = img.height;
 
-		if (!viewport) {
-		  if (w > h) {
-			  img.style.width = '100%';
-				img.style.height = null;
-		  }
-			else {
-				img.style.width = null;
-			  img.style.height = '100%';
-		  }
-		}
-		else {
-		  var infoDiv = document.getElementById('info');
+      if (!viewport) {
+          if (w > h) {
+              img.style.width = '100%';
+              img.style.height = null;
+          }
+          else {
+              img.style.width = null;
+              img.style.height = '100%';
+          }
+      }
+      else {
+          var infoDiv = document.getElementById('info');
 
-			var ww = window.innerWidth;
-			var wh = window.innerHeight;
-			var dh = infoDiv.offsetHeight;
+          var ww = window.innerWidth;
+          var wh = window.innerHeight;
+          var dh = infoDiv.offsetHeight;
 
-			var nw = (ww - 40);
-			var nh = (wh - dh - 140);
-			var ratio = w/h;
+          var nw = (ww - 40);
+          var nh = (wh - dh - 140);
+          var ratio = w/h;
 
-		  if (w > h) {
-				img.style.width = nw + 'px';
-				img.style.height = null;
-				if ( (nw / ratio) > nh ) {
-					img.style.width = (nh * ratio) + 'px';
-				  img.style.height = nh + 'px';
-				}
-		  }
-			else {
-				img.style.width = null;
-			  img.style.height = nh + 'px';
-		  }
-		}
-	}
+          if (w > h) {
+              img.style.width = nw + 'px';
+              img.style.height = null;
+              if ( (nw / ratio) > nh ) {
+                  img.style.width = (nh * ratio) + 'px';
+                  img.style.height = nh + 'px';
+              }
+          }
+          else {
+              img.style.width = null;
+              img.style.height = nh + 'px';
+          }
+      }
+  }
 
-	window.onload = init;
+  window.onload = init;
 
   function toggleDisplay(id) {
-    if(document.getElementById(id).style.display == 'none') {
-      document.getElementById(id).style.display = 'block';
-      document.getElementById('ih_'+id).innerHTML = 'Hide info';
-	    setCookie('show_info',1,1000);
-    }
-    else {
-      document.getElementById(id).style.display = 'none';
-      document.getElementById('ih_'+id).innerHTML = 'Show info';
-		  setCookie('show_info',0,0);
-    }
+      if(document.getElementById(id).style.display == 'none') {
+          document.getElementById(id).style.display = 'block';
+          document.getElementById('ih_'+id).innerHTML = 'Hide info';
+          setCookie('show_info',1,1000);
+      }
+      else {
+          document.getElementById(id).style.display = 'none';
+          document.getElementById('ih_'+id).innerHTML = 'Show info';
+          setCookie('show_info',0,0);
+      }
 
-		var scale_to_viewport = getCookie('scale_to_viewport');
-		setImageStyle(scale_to_viewport);
+      var scale_to_viewport = getCookie('scale_to_viewport');
+      setImageStyle(scale_to_viewport);
   }
 
   function scaleToViewport() {
-		if(document.getElementById('ih_scale').innerHTML == 'Fullsize mode') {
-      document.getElementById('ih_scale').innerHTML = 'Viewport mode';
-	    setCookie('scale_to_viewport',1,1000);
-			setImageStyle(1);
-    }
-    else {
-			document.getElementById('ih_scale').innerHTML = 'Fullsize mode';
-		  setCookie('scale_to_viewport',0,0);
-			setImageStyle(0);
-    }
+      if(document.getElementById('ih_scale').innerHTML == 'Fullsize mode') {
+          document.getElementById('ih_scale').innerHTML = 'Viewport mode';
+          setCookie('scale_to_viewport',1,1000);
+          setImageStyle(1);
+      }
+      else {
+          document.getElementById('ih_scale').innerHTML = 'Fullsize mode';
+          setCookie('scale_to_viewport',0,0);
+          setImageStyle(0);
+      }
   }
-//-->
+  //-->
 </script>
 
 <div style="float:left">
-    <a href="<?='index.php'.($qstr ? ('?m=s&q='.$qstr.'&s='.$page) : '');?>">Back to index</a>&nbsp;&nbsp;-&nbsp;
-		<a href="javascript:toggleDisplay('info');"><span id="ih_info">Show info</span></a>&nbsp;&nbsp;-&nbsp;
-		<a href="javascript:scaleToViewport();"><span id="ih_scale">Scale to viewport</span></a>
+  <a href="<?='index.php'.($qstr ? ('?m=s&q='.$qstr.'&s='.$page) : '');?>">Back to index</a>&nbsp;&nbsp;-&nbsp;
+  <a href="javascript:toggleDisplay('info');"><span id="ih_info">Show info</span></a>&nbsp;&nbsp;-&nbsp;
+  <a href="javascript:scaleToViewport();"><span id="ih_scale">Scale to viewport</span></a>
 </div>
 <div style="float:right">
-    <? if ($session['userPrivs']) { ?>
-    Menu:
-    <a href="index.php?m=r&id=<?=$img->getImage_id();?>">Remove</a>
-    <? } ?>
+  <? if ($session['userPrivs']) { ?>
+  Menu:
+  <a href="index.php?m=r&id=<?=$img->getImage_id();?>">Remove</a>
+  <? } ?>
 </div>
 
 <br style="clear:both;" />
 
 <div id="galleryview">
-    <table>
-			<tr><td>
-			  <div style="display: none;" id="info">
-				<table>
-        <tr>
-            <td>Title</td>
-            <td><?=$img->getTitle();?></td>
-        </tr>
-        <? if ($session['userPrivs']) { ?>
-        <tr>
-            <td>Edit title</td>
-            <td>
+  <table>
+    <tr>
+      <td>
+        <div style="display: none;" id="info">
+          <table>
+            <tr>
+              <td>Title</td>
+              <td><?=$img->getTitle();?></td>
+            </tr>
+            <? if ($session['userPrivs']) { ?>
+            <tr>
+              <td>Edit title</td>
+              <td>
                 <form action="index.php?m=a" method="post">
-                    <input type="text" name="title" value="<?=$img->getTitle();?>" size="80" />
-                    <input type="hidden" name="a" value="editTitle">
-                    <input type="hidden" name="id" value="<?=$img->getImage_id();?>">
-                    <input type="submit" name="submit_title">
+                  <input type="text" name="title" value="<?=$img->getTitle();?>" size="80" />
+                  <input type="hidden" name="a" value="editTitle">
+                  <input type="hidden" name="id" value="<?=$img->getImage_id();?>">
+                  <input type="submit" name="submit_title">
                 </form>
-            </td>
-        </tr>
-        <? } ?>
-        <tr>
-            <td>Views</td>
-            <td><?=$img->getViews();?></td>
-        </tr>
-        <tr>
-            <td>Server directory</td>
-            <td><?=substr($img->getPath(),strpos($img->getPath(),"/"));?></td>
-        </tr>
-        <tr>
-            <td>Tags</td>
-            <td>
+              </td>
+            </tr>
+            <? } ?>
+            <tr>
+              <td>Views</td>
+              <td><?=$img->getViews();?></td>
+            </tr>
+            <tr>
+              <td>Server directory</td>
+              <td><?=substr($img->getPath(),strpos($img->getPath(),"/"));?></td>
+            </tr>
+            <tr>
+              <td>Tags</td>
+              <td>
                 <div class="tagcloud">
-                    <?php foreach($img->getTags() as $tag): ?>
-                    <a href="index.php?m=s&q=<?=urlencode(stripslashes($tag['title']));?>"><?=stripslashes($tag['title']);?></a>
-                    <?php endforeach; ?>
+                  <?php foreach($img->getTags() as $tag): ?>
+                  <a href="index.php?m=s&q=<?=urlencode(stripslashes($tag['title']));?>"><?=stripslashes($tag['title']);?></a>
+                  <?php endforeach; ?>
                 </div>
-            </td>
-        </tr>
-        <? if ($session['userPrivs']) { ?>
-        <tr>
-            <td>Edit tags</td>
-            <td>
+              </td>
+            </tr>
+            <? if ($session['userPrivs']) { ?>
+            <tr>
+              <td>Edit tags</td>
+              <td>
                 <form action="index.php?m=a" method="post">
-                    <?php foreach($img->getTags() as $tag):
+                  <?php $tags = '';
+                    foreach($img->getTags() as $tag):
                     //$tags .= $tag['title'].' ';
                     //$tags .= htmlspecialchars(stripslashes($tag['title'])).' ';
                     $tags .= stripslashes($tag['title']).' ';
                     endforeach; ?>
-                    <input type="text" name="tags" value="<?=$tags;?>" size="80" />
-                    <input type="hidden" name="a" value="editTags">
-                    <input type="hidden" name="id" value="<?=$img->getImage_id();?>">
-                    <input type="submit" name="submit_tags">
+                  <input type="text" name="tags" value="<?=$tags;?>" size="80" />
+                  <input type="hidden" name="a" value="editTags">
+                  <input type="hidden" name="id" value="<?=$img->getImage_id();?>">
+                  <input type="submit" name="submit_tags">
                 </form>
-            </td>
-        </tr>
-        <? } ?>
-				</table>
-				</div>
-				</td></tr>
-        <tr>
-            <td colspan="2">
-                <a href="<?=GALLERY_ROOT.$img->getPath().$img->getFilename();?>">
-                    <img id="img" src="<?=GALLERY_ROOT.$img->getPath().$img->getFilename();?>"
-                         alt="<?=$img->getAuthor_id();?>">
-                </a>
-            </td>
-        </tr>
-    </table>
+              </td>
+            </tr>
+            <? } ?>
+          </table>
+        </div>
+    </td></tr>
+    <tr>
+      <td colspan="2">
+        <a href="<?=GALLERY_ROOT.$img->getPath().$img->getFilename();?>">
+          <img id="img" src="<?=GALLERY_ROOT.$img->getPath().$img->getFilename();?>"
+               alt="<?=$img->getAuthor_id();?>">
+        </a>
+      </td>
+    </tr>
+  </table>
 </div>
 <a href="index.php">Back to index</a>

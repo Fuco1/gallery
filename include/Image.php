@@ -19,6 +19,10 @@ class Image {
         $this->views = $views;
     }
 
+    public function __toString() {
+        return "Image: $this->title";
+    }
+
     public function getImage_id() {
         return $this->image_id;
     }

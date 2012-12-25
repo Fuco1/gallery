@@ -15,25 +15,34 @@ class Template {
         $this->vars = array();
     }
 
+    function __toString() {
+        return "Template";
+    }
+
     /**
      * Set a template variable.
      */
     function set($name, $value) {
-		if (is_array($value)) {
-			$this->vars[$name] = $value;
-			return;
-		}
-		if (is_object($value)) {
-			$class = get_class($value);
-			if ($class == 'Template') {
-				$this->vars[$name] = $value->fetch();
-			} else if ($class == 'CachedTemplate') {
-				$this->vars[$name] = $value->fetch_cache($value->file);
-			}
-		}
-		else {
-			$this->vars[$name] = $value;
-		}
+        if (is_array($value)) {
+            //echo "setting array variable $name to $value <br>\n";
+            $this->vars[$name] = $value;
+            return;
+        }
+        if (is_object($value)) {
+            //echo "setting object variable $name to $value <br>\n";
+            $class = get_class($value);
+            if ($class == 'Template') {
+                $this->vars[$name] = $value->fetch();
+            } else if ($class == 'CachedTemplate') {
+                $this->vars[$name] = $value->fetch_cache($value->file);
+            } else {
+                $this->vars[$name] = $value;
+            }
+        }
+        else {
+            //echo "setting normal variable $name to $value <br>\n";
+            $this->vars[$name] = $value;
+        }
         //        $this->vars[$name] = (get_class($value) == 'Template' ||
         //            get_class($value) == 'CachedTemplate')
         //            ? $value->fetch() : $value;

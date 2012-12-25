@@ -89,7 +89,7 @@ class ImageManager {
 
         $tags = str_replace(' ', '\', \'', preg_replace("/(\s+)/", " ", trim($tags)));
 
-        $where .= 't.title IN (\'' . $tags . '\')';
+        $where = 't.title IN (\'' . $tags . '\')';
 
         //echo $where.'<br>';
 
@@ -133,7 +133,7 @@ LIMIT ' . $from . ', ' . $num;
         $tags = htmlspecialchars($tags);
         $tags = str_replace(' ', '\', \'', preg_replace("/(\s+)/", " ", trim($tags)));
 
-        $where .= 't.title IN (\'' . $tags . '\')';
+        $where = 't.title IN (\'' . $tags . '\')';
 
         //        $query = 'SELECT DISTINCT COUNT(i.image_id) AS count FROM
         //(
