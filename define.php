@@ -10,11 +10,11 @@ define("BATCH_HOME", 'batch/');
 define("IMG_ROOT", 'upload/img/');
 define("GALLERY_ROOT", APP_ROOT.'upload/img/');
 
-define("IMAGES_TABLE", 'IMAGES');
-define("IMAGE_TAGS_TABLE", 'IMAGE_TAGS');
-define("TAGS_TABLE", 'TAGS');
-define("USERS_TABLE", 'USERS');
-define("SESSIONS_TABLE", 'SESSIONS');
+define("IMAGES_TABLE", 'images');
+define("IMAGE_TAGS_TABLE", 'image_tags');
+define("TAGS_TABLE", 'tags');
+define("USERS_TABLE", 'users');
+define("SESSIONS_TABLE", 'sessions');
 
 define("CACHE_TIMEOUT", 1);
 
