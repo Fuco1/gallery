@@ -1,8 +1,8 @@
 <?php
 
 define("ROOT", str_replace('\\', '/', dirname(__FILE__)) . '/');
-define("DOMAIN", 'localhost');
-define("APP_ROOT", '/gallery/');
+define("DOMAIN", '127.0.0.1');
+define("APP_ROOT", '/');
 define("TPL_HOME", ROOT . 'templates/');
 define("INCLUDE_HOME", ROOT . 'include/');
 define("BATCH_HOME", 'batch/');

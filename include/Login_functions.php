@@ -1,10 +1,10 @@
 <?php
 
 /******************************************************************************
- 	Author: 3DM@rk
-	December 2009
-	for dasnet.cz
-	(login_functions.php)
+    Author: 3DM@rk
+    December 2009
+    for dasnet.cz
+    (login_functions.php)
 ******************************************************************************/
 
 require('Session.php');
@@ -35,7 +35,7 @@ class LoginManager {
             return "Musíte zadat jméno i heslo.";
         }
 
-        $username = mysql_real_escape_string(trim($username), $this->db->getDb());
+        $username = mysqli_real_escape_string(trim($username), $this->db->getDb());
         $autologin = $autologin === true ? 1 : 0;
 
         if(strlen($username) > 255 || strlen($password) > 255) {
@@ -88,14 +88,14 @@ class LoginManager {
 
         $sql = 'SELECT user_id, user_password FROM '.PHPBB_DATABASE.'.'.PHPBB_PREFIX.'users WHERE username = \''.$username.'\'';
 
-        $result = mysql_query($sql, $this->db->getDb());
+        $result = mysqli_query($sql, $this->db->getDb());
 
-        if(!$result || @mysql_num_rows($result) < 1) {
-            echo mysql_error($this->db->getDb());
+        if(!$result || @mysqli_num_rows($result) < 1) {
+            echo mysqli_error($this->db->getDb());
             return false;
         }
         else {
-            $row = mysql_fetch_array($result);
+            $row = mysqli_fetch_array($result);
 
             return $row;
         }
@@ -230,9 +230,9 @@ class LoginManager {
         $sql = 'SELECT group_id FROM '.PHPBB_DATABASE.'.'.PHPBB_PREFIX.'user_group WHERE user_id = '.$user_id.' AND user_pending = 0
     AND group_id IN ('.ADMIN_GROUP.')';
 
-        $result = mysql_query($sql, $this->db->getDb());
+        $result = mysqli_query($sql, $this->db->getDb());
 
-        if(!$result || @mysql_num_rows($result) < 1) {
+        if(!$result || @mysqli_num_rows($result) < 1) {
             return 0;
         }
         else {

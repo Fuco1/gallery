@@ -46,7 +46,7 @@ class ImageManager {
 
         $re = $this->db->query($query);
         if (!$re)
-            echo mysql_error();
+            echo mysqli_error($this->db->getDb());
         $images = array();
 
         while ($img = Database::fetchObject($re, 'Image')) {
@@ -80,9 +80,9 @@ class ImageManager {
         //echo $tags.'<br>';
         $tags = stripslashes($tags);
         //echo $tags.'<br>';
-        //$tags = mysql_real_escape_string($tags);
-        $tags = mysql_real_escape_string($tags);
-        $tags = mysql_real_escape_string($tags);
+        //$tags = mysqli_real_escape_string($tags);
+        $tags = mysqli_real_escape_string($this->db->getDb(), $tags);
+        $tags = mysqli_real_escape_string($this->db->getDb(), $tags);
         //echo $tags.'<br>';
         $tags = htmlspecialchars($tags);
         //echo $tags.'<br>';
@@ -107,7 +107,7 @@ LIMIT ' . $from . ', ' . $num;
 
         $re = $this->db->query($query);
         if (!$re)
-            echo mysql_error();
+            echo mysqli_error($this->db->getDb());
         $images = array();
 
         while ($img = Database::fetchObject($re, 'Image')) {
@@ -120,7 +120,7 @@ LIMIT ' . $from . ', ' . $num;
     function getImagesNum() {
         $re = $this->db->query(GET_IMAGE_NUM);
         if (!$re)
-            echo mysql_error();
+            echo mysqli_error($this->db->getDb());
         $row = Database::fetchArray($re);
         return $row['count'];
     }
@@ -128,8 +128,8 @@ LIMIT ' . $from . ', ' . $num;
     function getImagesByTagsNum($tags) {
         $tags = htmlspecialchars_decode($tags);
         $tags = stripslashes($tags);
-        $tags = mysql_real_escape_string($tags);
-        $tags = mysql_real_escape_string($tags);
+        $tags = mysqli_real_escape_string($this->db->getDb(), $tags);
+        $tags = mysqli_real_escape_string($this->db->getDb(), $tags);
         $tags = htmlspecialchars($tags);
         $tags = str_replace(' ', '\', \'', preg_replace("/(\s+)/", " ", trim($tags)));
 
@@ -152,7 +152,7 @@ GROUP BY i.image_id) as s1';
 
         $re = $this->db->query($query);
         if (!$re)
-            echo mysql_error();
+            echo mysqli_error($this->db->getDb());
         $row = Database::fetchArray($re);
         return $row['count'];
     }
@@ -194,7 +194,7 @@ GROUP BY i.image_id) as s1';
         $tags = preg_replace("/(\s+)/", " ", trim($tags));
 
         // escape user defined directory
-        $dir = mysql_real_escape_string($dir);
+        $dir = mysqli_real_escape_string($this->db->getDb(), $dir);
         $dir = htmlspecialchars($dir);
 
         $dir = $author_id . '/' . $dir;
@@ -202,7 +202,7 @@ GROUP BY i.image_id) as s1';
             $dir .= '/';
         }
 
-        $title = mysql_real_escape_string($title);
+        $title = mysqli_real_escape_string($this->db->getDb(), $title);
         $title = htmlspecialchars($title);
 
         //echo $dir.'<br>';
@@ -219,11 +219,11 @@ GROUP BY i.image_id) as s1';
         //echo $query.'<br>';
 
         if ($this->db->query($query)) {
-            $image_id = mysql_insert_id();
-            //die("MySQL Error: " . mysql_error());
+            $image_id = mysqli_insert_id($this->db->getDb());
+            //die("MySQL Error: " . mysqli_error());
             //}
 
-            $tags = mysql_real_escape_string($tags);
+            $tags = mysqli_real_escape_string($this->db->getDb(), $tags);
             $tags = htmlspecialchars($tags);
             // tokenize tags
             $tags = explode(' ', $tags);
@@ -287,7 +287,7 @@ GROUP BY i.image_id) as s1';
 
 //    private function buildQuery($query, $values) {
 //        foreach ($values as &$value) {
-//            $value = mysql_real_escape_string($value, $this->db->getDb());
+//            $value = mysqli_real_escape_string($value, $this->db->getDb());
 //        }
 //
 //        return str_replace(
@@ -304,7 +304,7 @@ GROUP BY i.image_id) as s1';
         // add tags which doesn't exist
         $re = $this->createTags($tags);
         if (!$re) {
-            echo mysql_error() . '<br>';
+            echo mysqli_error($this->db->getDb()) . '<br>';
         }
 
         // get all tags for this image
@@ -320,7 +320,7 @@ GROUP BY i.image_id) as s1';
         // pair them to image
         $re = $this->addTagsToImage($existingTags, $image_id);
         if (!$re) {
-            echo mysql_error() . '<br>';
+            echo mysqli_error($this->db->getDb()) . '<br>';
         }
     }
 
@@ -334,7 +334,7 @@ GROUP BY i.image_id) as s1';
         //echo $tags.'<br>';
         $tags = preg_replace("/(\s+)/", " ", trim($tags));
         //echo $tags.'<br>';
-        $tags = mysql_real_escape_string($tags);
+        $tags = mysqli_real_escape_string($this->db->getDb(), $tags);
         //echo $tags.'<br>';
         $tags = htmlspecialchars($tags);
         //echo $tags.'<br>';
@@ -353,7 +353,7 @@ GROUP BY i.image_id) as s1';
             die('Fuck off (image not found)');
         }
 
-        $title = mysql_real_escape_string($title);
+        $title = mysqli_real_escape_string($this->db->getDb(), $title);
         $title = htmlspecialchars($title);
 
         $query = 'UPDATE ' . IMAGES_TABLE . ' SET title = \'' . $title . '\' WHERE image_id = ' . $id;
@@ -389,7 +389,7 @@ GROUP BY i.image_id) as s1';
     function getTagCloud() {
         $re = $this->db->query(GET_TAG_CLOUD);
         if (!$re)
-            echo mysql_error();
+            echo mysqli_error(Database::$dbGlobal);
 
         $tagCloud = array();
         $max = 0;

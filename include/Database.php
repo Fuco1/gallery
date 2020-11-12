@@ -34,6 +34,7 @@ require(INCLUDE_HOME . "Image.php");
 class Database {
 
     private $db = null;
+    public static $dbGlobal = null;
     private $host, $user, $password, $dbname;
 
     function Database($host, $user, $password, $dbname) {
@@ -45,20 +46,22 @@ class Database {
 
     function connect() {
         if (!$this->db) {
-            $this->db = mysql_connect($this->host, $this->user, $this->password);
+            $this->db = mysqli_connect($this->host . ':8474', $this->user, $this->password);
             if (!$this->db)
-                die("Could not connect: " . mysql_error());
+                die("Could not connect: " . mysqli_error($this->db));
 
-            $db_selected = mysql_select_db($this->dbname, $this->db);
+            $db_selected = mysqli_select_db($this->db, $this->dbname);
             if (!$db_selected) {
                 $this->db = null;
-                die("Could not connect: " . mysql_error());
+                die("Could not connect: " . mysqli_error($this->db));
             }
+
+            self::$dbGlobal = $this->db;
         }
     }
 
     function close() {
-        return mysql_close($this->db);
+        return mysqli_close($this->db);
     }
 
     function query($query) {
@@ -66,19 +69,19 @@ class Database {
             $this->connect();
         }
 
-        return mysql_query($query);
+        return mysqli_query($this->db, $query);
     }
 
     static function fetchArray($resultSet) {
-        return mysql_fetch_assoc($resultSet);
+        return mysqli_fetch_assoc($resultSet);
     }
 
     /* static function fetchObject($resultSet) {
-      return mysql_fetch_object($resultSet);
+      return mysqli_fetch_object($resultSet);
       } */
 
     static function fetchObject($resultSet, $className) {
-        return mysql_fetch_object($resultSet, $className);
+        return mysqli_fetch_object($resultSet, $className);
     }
 
     function getDb() {
@@ -87,7 +90,7 @@ class Database {
 
     static function buildQuery($query, $values, $db_handle) {
         foreach ($values as &$value) {
-            $value = mysql_real_escape_string($value, $db_handle->getDb());
+            $value = mysqli_real_escape_string($db_handle->getDb(), $value);
         }
 
         return str_replace(

@@ -64,11 +64,11 @@ class LoginManager {
         $query = Database::buildQuery(ADD_USER, array($username, sha1($password), time(), 0), $this->db);
         //echo $query . '<br>';
         if ($this->db->query($query)) {
-            session_begin(mysql_insert_id(), $username, 0, true);
+            session_begin(mysqli_insert_id($this->db->getDb()), $username, 0, true);
             //$this->login($username, $password, true);
             return "Registration successful - logged in";
         } else {
-            //echo mysql_error() . '<br>';
+            //echo mysqli_error() . '<br>';
             return "Database error while saving user!";
         }
     }

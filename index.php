@@ -1,4 +1,9 @@
 <?php
+
+if (preg_match('/\.(?:png|jpg|jpeg|gif|css)$/', $_SERVER["REQUEST_URI"])) {
+    return false;    // serve the requested resource as-is.
+} else {
+
 //ini_set('error_reporting', E_ALL & ~E_NOTICE);
 require_once('define.php');
 //require_once(INCLUDE_HOME."Session.php");
@@ -12,7 +17,7 @@ class Index {
     var $tpl, $im, $lm, $db;
 
     function Index() {
-        $this->db = new Database('localhost', DB_USER, DB_PASS, DB_NAME);
+        $this->db = new Database('127.0.0.1', DB_USER, DB_PASS, DB_NAME);
     }
 
     function render() {
@@ -338,4 +343,5 @@ $time_end = microtime(true);
 $time = $time_end - $time_start;
 
 echo "<br>Page generated in $time seconds\n";
+}
 ?>

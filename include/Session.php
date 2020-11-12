@@ -29,24 +29,24 @@ function session_begin($user_id, $username, $privs, $autologin) {
     //delete any old sessions of this user, if he requested autologin
     if ($autologin) {
         $sql = 'DELETE FROM ' . SESSIONS_TABLE . ' WHERE userId = ' . $user_id;
-        @mysql_query($sql);
+        mysqli_query($db->getDb(), $sql);
     }
 
     //create the database query
     $sql = sprintf('INSERT INTO ' . SESSIONS_TABLE . ' VALUES (\'%s\', \'%s\', %d, %d, %d, %d, \'%s\', \'%s\', %d)',
-                    mysql_real_escape_string($session_id), //sessionId
-                    mysql_real_escape_string($username), //username
+                   mysqli_real_escape_string($db->getDb(), $session_id), //sessionId
+                   mysqli_real_escape_string($db->getDb(), $username), //username
                     $user_id, //userId
                     $privs, //userPrivs
                     $now, //start
                     $now, //lastActive
-                    mysql_real_escape_string($browser), //browser
-                    mysql_real_escape_string($ip), //ip
+                   mysqli_real_escape_string($db->getDb(), $browser), //browser
+                   mysqli_real_escape_string($db->getDb(), $ip), //ip
                     $autologin        //autologin
     );
 
     //save the session into the database
-    mysql_query($sql, $db->getDb());
+    mysqli_query($db->getDb(), $sql);
 
     //put a cookie with the session ID to the client's computer
     if ($autologin) {
@@ -86,19 +86,19 @@ function session_resume() {
     }
 
     //verify the session ID in the database
-    $session_id = mysql_real_escape_string($_COOKIE['gallery_ssid'], $db->getDb());
+    $session_id = mysqli_real_escape_string($db->getDb(), $_COOKIE['gallery_ssid']);
 
     $sql = 'SELECT * FROM ' . SESSIONS_TABLE . " WHERE sessionId = '$session_id'";
 
-    $result = mysql_query($sql, $db->getDb());
+    $result = mysqli_query($db->getDb(), $sql);
 
     //wrong session ID
-    if (!$result || @mysql_num_rows($result) < 1) {
+    if (!$result || mysqli_num_rows($result) < 1) {
         return false;
     }
     //existing session
     else {
-        $session_data = mysql_fetch_array($result);
+        $session_data = mysqli_fetch_array($result);
 
         foreach ($session_data as $key => $value) {
             $session_data[$key] = stripslashes($value);
@@ -127,7 +127,7 @@ function clean_sessions() {
 
     $sql = 'DELETE FROM ' . SESSIONS_TABLE . " WHERE autologin = 0 AND lastActive+900 < $now";
 
-    @mysql_query($sql, $db->getDb());
+    mysqli_query($db->getDb(), $sql);
 }
 
 /**
@@ -141,7 +141,7 @@ function session_update($ssid) {
 
     $sql = 'UPDATE ' . SESSIONS_TABLE . " SET lastActive = $now WHERE sessionId = '$ssid'";
 
-    @mysql_query($sql, $db->getDb());
+    mysqli_query($db->getDb(), $sql);
 }
 
 /**
@@ -159,7 +159,7 @@ function session_kill($ssid) {
     //delete the session from database
     $sql = 'DELETE FROM ' . SESSIONS_TABLE . " WHERE sessionId = '$ssid'";
 
-    @mysql_query($sql, $db->getDb());
+    mysqli_query($db->getDb(), $sql);
 }
 
 ?>
